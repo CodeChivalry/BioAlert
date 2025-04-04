@@ -34,3 +34,4 @@ Thumbs.db
 
 # Anything pip freeze might install as editable
 *.egg-info/
+.env
