@@ -19,16 +19,9 @@ client = MongoClient(MONGO_URI)
 db = client["stress-db"]
 collection = db["sensor_data"]
 
-<<<<<<< Updated upstream
-# Paths to Model & Scaler
+
 model_path = "pages/stress_model.pkl"
 scaler_path = "pages/scaler.pkl"
-=======
-
-model_path = r"c:/Users/MEHAK SHARMA/Documents/amhacks/BioAlert/Pages/stress_model.pkl"
-scaler_path = r"c:/Users/MEHAK SHARMA/Documents/amhacks/BioAlert/Pages/scaler.pkl"
->>>>>>> Stashed changes
-
 
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
