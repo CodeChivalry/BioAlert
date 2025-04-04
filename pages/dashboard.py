@@ -21,8 +21,8 @@ db = client["stress-db"]
 collection = db["sensor_data"]
 
 # Paths to Model & Scaler
-model_path = r"pages/stress_model.pkl"
-scaler_path = r"pages/scaler.pkl"
+model_path = "pages/stress_model.pkl"
+scaler_path = "pages/scaler.pkl"
 
 # Load Model & Scaler
 model = joblib.load(model_path)
