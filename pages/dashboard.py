@@ -8,36 +8,39 @@ import joblib
 import os
 from dotenv import load_dotenv
 
-# ✅ Set Streamlit page configuration FIRST
 st.set_page_config(page_title="BioAlert Dashboard", layout="wide")
 
-# Load environment variables
+
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 
-# MongoDB connection
+
 client = MongoClient(MONGO_URI)
 db = client["stress-db"]
 collection = db["sensor_data"]
 
+<<<<<<< Updated upstream
 # Paths to Model & Scaler
 model_path = "pages/stress_model.pkl"
 scaler_path = "pages/scaler.pkl"
+=======
 
-# Load Model & Scaler
+model_path = r"c:/Users/MEHAK SHARMA/Documents/amhacks/BioAlert/Pages/stress_model.pkl"
+scaler_path = r"c:/Users/MEHAK SHARMA/Documents/amhacks/BioAlert/Pages/scaler.pkl"
+>>>>>>> Stashed changes
+
+
 model = joblib.load(model_path)
 scaler = joblib.load(scaler_path)
 
-# Block access if not logged in
 if 'user' not in st.session_state:
     st.warning("Please login first.")
     st.stop()
 
-# Welcome Message
 st.title(f"📊 Welcome, {st.session_state['user'].split('@')[0].capitalize()}")
 st.markdown("This is your **BioAlert** dashboard for monitoring stress & fatigue in real-time.")
 
-# ✅ Button to Check Stress/Fatigue Level
+
 if st.button("Check Stress/Fatigue Level"):
     recent_entry = collection.find_one(sort=[("timestamp", -1)])
 
@@ -62,7 +65,7 @@ if st.button("Check Stress/Fatigue Level"):
     else:
         st.warning("⚠️ No data found in the database!")
 
-# ✅ Fetch Latest Data for Graphs
+
 @st.cache_data(ttl=5)
 def fetch_latest_data():
     cursor = collection.find().sort("timestamp", -1).limit(100)
@@ -73,7 +76,7 @@ def fetch_latest_data():
         df = df.sort_values("timestamp")
     return df
 
-# ✅ Plotting Function
+
 def plot_signal(signal_names, title, y_label):
     df = fetch_latest_data()
     available_signals = [s for s in signal_names if s in df.columns]
@@ -84,7 +87,7 @@ def plot_signal(signal_names, title, y_label):
     else:
         st.warning(f"⚠️ No data available for {title} yet!")
 
-# 📊 Graphs for Each Biosignal
+
 st.subheader("🧠 EEG (Brain Activity)")
 plot_signal(["Theta", "Alpha1", "Alpha2", "Beta1", "Beta2", "Gamma1", "Gamma2", "Attention", "Meditation"], 
             "EEG (Brain Activity)", "EEG Signal")
@@ -101,10 +104,9 @@ plot_signal(["HR"], "Heart Rate (BPM)", "Heart Rate")
 st.subheader("📡 Accelerometer Data")
 plot_signal(["AccX", "AccY", "AccZ"], "Accelerometer (Movement Data)", "Acceleration")
 
-# ✅ Auto-refresh trick
+
 st.query_params["refresh"] = str(time.time())
 
-# 🧠 Chatbot functionality
 from utils.chatbot import get_gemini_reply
 
 with st.sidebar:

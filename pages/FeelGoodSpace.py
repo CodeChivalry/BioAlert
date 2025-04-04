@@ -1,9 +1,11 @@
 import streamlit as st
 import random
 
+if 'user' not in st.session_state:
+    st.warning("Please login first.")
+    st.stop()
 st.set_page_config(page_title="Motivating Visuals", layout="centered")
 
-# -- Mood categories and image/quote datasets --
 motivating_data = {
     "Nature & Peace": [
         {
@@ -63,10 +65,10 @@ mood = st.selectbox("🧠 What do you feel like seeing?", list(motivating_data.k
 
 if st.button("✨ Inspire Me"):
     chosen = random.choice(motivating_data[mood])
-    st.image(chosen["url"], caption=chosen["caption"], use_column_width=True)
+    st.image(chosen["url"], caption=chosen["caption"],use_container_width=True)
     st.success(f" *{chosen['quote']}*")
 
-# Optional Relaxation Add-ons
+
 with st.expander("🎥 Relax with a peaceful video"):
     st.video("https://www.youtube.com/embed/2OEL4P1Rz04")
 

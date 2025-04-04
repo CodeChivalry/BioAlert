@@ -4,6 +4,9 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+if 'user' not in st.session_state:
+    st.warning("Please login first.")
+    st.stop()
 GOOGLE_MAPS_API_KEY = os.getenv("YOUR_GOOGLE_MAPS_API_KEY")
 
 if not GOOGLE_MAPS_API_KEY:

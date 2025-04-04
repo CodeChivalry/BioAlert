@@ -29,7 +29,7 @@ if choice == "Login":
                 st.success("Logged in successfully.")
                 st.session_state["logged_in"] = True
                 st.session_state["user"] = email
-                st.rerun()  # Reload to show dashboard
+                st.rerun()  
             else:
                 st.error(response["message"])
         else:
@@ -45,6 +45,6 @@ else:
         else:
             st.warning("Please fill in all fields.")
 
-# If user is logged in, redirect to app.py
+
 if "logged_in" in st.session_state and st.session_state["logged_in"]:
     st.switch_page("pages/dashboard.py")

@@ -4,6 +4,9 @@ from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 
+if 'user' not in st.session_state:
+    st.warning("Please login first.")
+    st.stop()
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 
@@ -18,3 +21,4 @@ if st.checkbox("Show Recent Entries"):
     if "_id" in df:
         df = df.drop(columns=["_id"])
     st.write(df)
+

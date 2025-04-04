@@ -4,20 +4,22 @@ import datetime
 from dotenv import load_dotenv
 import os
 
-# Load environment variables
+if 'user' not in st.session_state:
+    st.warning("Please login first.")
+    st.stop()
+
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 
-# MongoDB connection
+
 client = MongoClient(MONGO_URI)
-db = client["stress-db"]  # you can change this name
+db = client["stress-db"]  
 collection = db["sensor_data"]
 
 st.title("🧠 Real-time Stress Input Form")
 
 st.write("Enter sensor data below (based on MEFAR dataset):")
 
-# All input fields from the updated dataset
 time = st.text_input("Time (e.g. 2023-04-01 12:00:00)")
 bvp = st.number_input("Blood Volume Pulse (BVP)", format="%.15f", value=0.0)
 eda = st.number_input("Electrodermal Activity (EDA)", format="%.15f", value=0.0)
@@ -60,7 +62,6 @@ if st.button("Submit"):
     collection.insert_one(entry)
     st.success("✅ Data saved to MongoDB!")
 
-# Optional: Display recent entries
 if st.checkbox("Show Recent Entries"):
     import pandas as pd
     df = pd.DataFrame(list(collection.find().sort("timestamp", -1).limit(5)))
