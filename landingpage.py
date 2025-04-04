@@ -1,6 +1,5 @@
 import streamlit as st
 from utils.firebase_auth import login_user, signup_user
-
 st.set_page_config(page_title="BioAlert", layout="centered")
 
 st.title("BioAlert: Real-Time Stress & Fatigue Monitoring")
@@ -9,7 +8,7 @@ st.markdown("""
 BioAlert is a real-time dashboard that analyzes biosignal data like EEG, EDA, HR, and ACC to detect signs of stress and fatigue.  
 It uses ML models trained on the MEFAR dataset, helping users monitor their mental wellness without external hardware.
 
-Features:
+### Features:
 - Live stress & fatigue detection
 - AI wellness chatbot support
 - Secure login to your personal dashboard
@@ -28,8 +27,9 @@ if choice == "Login":
             response = login_user(email, password)
             if response["status"] == "success":
                 st.success("Logged in successfully.")
-                st.session_state['user'] = email
-                st.switch_page("pages/dashboard.py")
+                st.session_state["logged_in"] = True
+                st.session_state["user"] = email
+                st.rerun()  # Reload to show dashboard
             else:
                 st.error(response["message"])
         else:
@@ -44,3 +44,7 @@ else:
                 st.error(response["message"])
         else:
             st.warning("Please fill in all fields.")
+
+# If user is logged in, redirect to app.py
+if "logged_in" in st.session_state and st.session_state["logged_in"]:
+    st.switch_page("pages/dashboard.py")
