@@ -1,0 +1,36 @@
+# Python cache and bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+env/
+
+# Firebase credentials and secrets
+.env
+.streamlit/secrets.toml
+
+# Streamlit cache and logs
+.streamlit/config.toml
+.streamlit/*.json
+.streamlit/*.log
+
+# VS Code settings (optional, if you're using VS Code)
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Jupyter/IPython (if used)
+.ipynb_checkpoints/
+
+# Pyrebase token cache (sometimes stored in cache)
+*.token*
+
+# Log files
+*.log
+
+# Anything pip freeze might install as editable
+*.egg-info/
