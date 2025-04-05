@@ -7,22 +7,17 @@ import os
 with open("assets/style.css") as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-
 if 'user' not in st.session_state:
     st.warning("Please login first.")
     st.stop()
 
-
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
-
-
 client = MongoClient(MONGO_URI)
-db = client["stress-db"]  
+db = client["stress-db"]
 collection = db["sensor_data"]
 
 st.title(" Real-time Stress Input Form")
-
 st.write("Enter sensor data below (based on MEFAR dataset):")
 
 time = st.text_input("Time (e.g. 2023-04-01 12:00:00)")
@@ -43,6 +38,10 @@ gamma1 = st.number_input("EEG Gamma1", format="%.15f", value=0.0)
 gamma2 = st.number_input("EEG Gamma2", format="%.15f", value=0.0)
 attention = st.number_input("Attention", format="%.15f", value=0.0)
 meditation = st.number_input("Meditation", format="%.15f", value=0.0)
+
+# NEW FIELD
+self_reported_stress = st.slider("🧠 Self-Reported Stress Level (0 = No Stress, 1 = Max Stress)", 0.0, 1.0, 0.0, 0.01)
+
 if st.button("Submit"):
     entry = {
         "BVP": bvp,
@@ -62,6 +61,7 @@ if st.button("Submit"):
         "Gamma2": gamma2,
         "Attention": attention,
         "Meditation": meditation,
+        "self_reported_stress": self_reported_stress,  # ✅ added field
         "timestamp": datetime.datetime.now()
     }
     collection.insert_one(entry)
@@ -76,9 +76,8 @@ if st.checkbox("Show Recent Entries"):
 
 # Sidebar logout button
 with st.sidebar:
-    #st.markdown("---")
     if st.button("Logout"):
         st.session_state.clear()
         st.success("Logged out successfully.")
-        st.switch_page("Welcome.py")  # Redirect to login/signup page
+        st.switch_page("Welcome.py")
 
