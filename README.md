@@ -38,21 +38,31 @@
 ```bash
 git clone https://github.com/your-username/BioAlert.git
 cd BioAlert
-
+```
 ### 2. Set Virtual Environment
+```bash
 python -m venv venv
+```
 
 Activate the Virtual Environment
 **On Windows:**
+
+```bash
 venv\Scripts\activate
+```
 
 **On macOS/Linux:**
+```bash
 source venv/bin/activate
+```
 
 ### 3. Install Dependencies
-pip install -r requirements.txt
 
+```bash
+pip install -r requirements.txt
+```
 ### 4. Set Environment Variables
+
 Set up your API keys in a .env file
 - Firebase API Keys for Authentication and database
 - GEMINI_API_KEY
@@ -60,4 +70,7 @@ Set up your API keys in a .env file
 
 
 ### 5. Run the Application
+
+```bash
 streamlit run app.py
+```
