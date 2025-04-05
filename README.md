@@ -72,5 +72,5 @@ Set up your API keys in a .env file
 ### 5. Run the Application
 
 ```bash
-streamlit run app.py
+streamlit run Welcome.py
 ```
