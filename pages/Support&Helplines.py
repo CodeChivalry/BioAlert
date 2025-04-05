@@ -4,6 +4,11 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+
+with open("assets/style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
 if 'user' not in st.session_state:
     st.warning("Please login first.")
     st.stop()
@@ -55,3 +60,13 @@ def show_helplines():
     st.write(f"📞 Helpline: {get_helpline_numbers()[country]}")
 
 show_helplines()
+
+# Sidebar logout button
+with st.sidebar:
+    #st.markdown("---")
+    if st.button("Logout"):
+        st.session_state.clear()
+        st.success("Logged out successfully.")
+        st.switch_page("Welcome.py")  # Redirect to login/signup page
+
+

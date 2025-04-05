@@ -1,0 +1,39 @@
+/* ---- LANDING PAGE BACKGROUND ---- */
+body, .stApp {
+    background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364) !important;
+    color: white !important;
+  }
+  
+  /* ---- BUTTONS (bottle green) ---- */
+  button[kind="primary"] {
+    background-color: #228B22 !important; /* Bottle green */
+    color: white !important;
+    border-radius: 8px;
+    padding: 10px 20px;
+    border: none;
+    font-weight: 600;
+  }
+  
+  button[kind="primary"]:hover {
+    background-color: #1e7a1e !important; /* Darker on hover */
+  }
+
+
+
+  /* ---- SIDEBAR STYLING ---- */
+section[data-testid="stSidebar"] {
+    background-color: #24525292 !important; /* Dark greenish-black */
+    color: white !important;
+  }
+  
+  /* Sidebar text color */
+  section[data-testid="stSidebar"] .css-1v0mbdj {
+    color: white !important;
+  }
+  
+  header[data-testid="stHeader"] {
+    visibility: hidden;
+    height: 0;
+}
+  
+  

@@ -4,9 +4,14 @@ import datetime
 from dotenv import load_dotenv
 import os
 
+with open("assets/style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
 if 'user' not in st.session_state:
     st.warning("Please login first.")
     st.stop()
+
 
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
@@ -16,7 +21,7 @@ client = MongoClient(MONGO_URI)
 db = client["stress-db"]  
 collection = db["sensor_data"]
 
-st.title("🧠 Real-time Stress Input Form")
+st.title(" Real-time Stress Input Form")
 
 st.write("Enter sensor data below (based on MEFAR dataset):")
 
@@ -68,3 +73,12 @@ if st.checkbox("Show Recent Entries"):
     if "_id" in df:
         df = df.drop(columns=["_id"])
     st.write(df)
+
+# Sidebar logout button
+with st.sidebar:
+    #st.markdown("---")
+    if st.button("Logout"):
+        st.session_state.clear()
+        st.success("Logged out successfully.")
+        st.switch_page("Welcome.py")  # Redirect to login/signup page
+

@@ -6,6 +6,10 @@ if 'user' not in st.session_state:
     st.stop()
 st.set_page_config(page_title="Motivating Visuals", layout="centered")
 
+with open("assets/style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+
 motivating_data = {
     "Nature & Peace": [
         {
@@ -61,7 +65,7 @@ motivating_data = {
 st.title("🌈 Feel-Good Space")
 st.markdown("Select a mood below to lift your spirits with peaceful visuals and calming content.")
 
-mood = st.selectbox("🧠 What do you feel like seeing?", list(motivating_data.keys()))
+mood = st.selectbox("What do you feel like seeing?", list(motivating_data.keys()))
 
 if st.button("✨ Inspire Me"):
     chosen = random.choice(motivating_data[mood])
@@ -74,4 +78,12 @@ with st.expander("🎥 Relax with a peaceful video"):
 
 with st.expander("🎧 Listen to calm background music"):
     st.audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
+
+# Sidebar logout button
+with st.sidebar:
+    #st.markdown("---")
+    if st.button("Logout"):
+        st.session_state.clear()
+        st.success("Logged out successfully.")
+        st.switch_page("Welcome.py")  # Redirect to login/signup page
 
