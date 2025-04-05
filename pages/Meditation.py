@@ -4,6 +4,12 @@ import streamlit.components.v1 as components
 import base64
 
 st.set_page_config(page_title="Guided Meditation", layout="centered")
+with open("assets/style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+if 'user' not in st.session_state:
+    st.warning("Please login first.")
+    st.stop()
 
 # State to track duration and start trigger
 if "meditation_duration" not in st.session_state:
@@ -90,3 +96,11 @@ if st.session_state.session_started:
         st.session_state.meditation_duration = None
         st.session_state.session_started = False
         st.rerun()
+    
+
+with st.sidebar:
+    if st.button("Logout"):
+       st.session_state.clear()
+       st.success("Logged out successfully.")
+       st.switch_page("Welcome.py")
+
