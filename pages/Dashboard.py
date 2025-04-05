@@ -9,8 +9,7 @@ import os
 from dotenv import load_dotenv
 
 st.set_page_config(page_title="BioAlert Dashboard", layout="wide")
-with open("assets/style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 load_dotenv()
 MONGO_URI = os.getenv("MONGO_URI")
 
@@ -19,7 +18,7 @@ client = MongoClient(MONGO_URI)
 db = client["stress-db"]
 collection = db["sensor_data"]
 
-
+# Paths to Model & Scaler
 model_path = "pages/stress_model.pkl"
 scaler_path = "pages/scaler.pkl"
 
@@ -46,17 +45,10 @@ if st.button("Check Stress/Fatigue Level"):
         st.subheader("🧠 Prediction Result:")
         if prediction == 1:
             st.error("⚠️ High Stress/Fatigue Detected!")
-            st.markdown("### 🌟 Take Action to Reduce Stress:")
-            if st.button("💬 Chat with Gemini AI"):
-                st.switch_page("pages/chatbot.py")
-            if st.button("🎵 View Relaxing Content"):
-                st.switch_page("pages/cute.py")
-            if st.button("📞 Emergency Help & Medical Stores"):
-                st.switch_page("pages/help.py")
         else:
             st.success("✅ Normal Stress/Fatigue Level")
     else:
-        st.warning(" No data found in the database!")
+        st.warning("⚠️ No data found in the database!")
 
 
 @st.cache_data(ttl=5)
@@ -78,23 +70,23 @@ def plot_signal(signal_names, title, y_label):
                       title=title, labels={"timestamp": "Time", "value": y_label})
         st.plotly_chart(fig, use_container_width=True)
     else:
-        st.warning(f" No data available for {title} yet!")
+        st.warning(f"⚠️ No data available for {title} yet!")
 
 
-st.subheader(" EEG (Brain Activity)")
+st.subheader("🧠 EEG (Brain Activity)")
 plot_signal(["Theta", "Alpha1", "Alpha2", "Beta1", "Beta2", "Gamma1", "Gamma2", "Attention", "Meditation"], 
             "EEG (Brain Activity)", "EEG Signal")
 
-st.subheader(" BVP (Blood Volume Pulse)")
+st.subheader("❤️ BVP (Blood Volume Pulse)")
 plot_signal(["BVP"], "BVP (Blood Volume Pulse)", "BVP Signal")
 
-st.subheader(" EDA (Electrodermal Activity)")
+st.subheader("🔵 EDA (Electrodermal Activity)")
 plot_signal(["EDA"], "EDA (Electrodermal Activity)", "EDA Signal")
 
-st.subheader(" Heart Rate (BPM)")
+st.subheader("💓 Heart Rate (BPM)")
 plot_signal(["HR"], "Heart Rate (BPM)", "Heart Rate")
 
-st.subheader(" Accelerometer Data")
+st.subheader("📡 Accelerometer Data")
 plot_signal(["AccX", "AccY", "AccZ"], "Accelerometer (Movement Data)", "Acceleration")
 
 
@@ -129,14 +121,3 @@ with st.sidebar:
             st.markdown(f"**{sender}**: {msg}")
         else:
             st.markdown("⚠️ Invalid message format")
-
-# Sidebar logout button
-with st.sidebar:
-    #st.markdown("---")
-    if st.button("Logout"):
-        st.session_state.clear()
-        st.success("Logged out successfully.")
-        st.switch_page("Welcome.py")  # Redirect to login/signup page
-
-
-
